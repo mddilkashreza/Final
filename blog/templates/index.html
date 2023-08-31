@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mt-4">
+          {% for post in posts %}
+            <div class="card mb-3">
+                <img src="{{ post.picture.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+              
+                  <p class="card-text">{{ post.content }}</p>
+                
+                </div>
+                <div class="card-footer">
+                  <a href="{% url 'blog:edit_post' post.id %}" class="btn btn-primary">Edit</a>
+                  <a data-postid="{{ post.id }}" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+              {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure ?
+        <form action="{% url 'blog:delete_post' %}" id="del-form" method="post">
+          {% csrf_token %}
+          <input type="number" id="_post_id" name="post_id">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">cancel</button>
+        <button id="del-btn" type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+
+
+{{ block.super}}
+
+<script src="text/javascript">
+  let modal = document.getElementById("deleteModal");
+  modal.addEventListener("show.bs.modal", function(evt){
+    let btn = evt.relatedTarget;
+    let postid = btn.dataset.postid;
+    console.log(postid)
+    let post_id = document.getElementById("_post_id")
+    post_id.value = postid;
+  });
+
+  let delBtn = document.getElementById("del-btn");
+  delBtn.addEventListener("click", function(){
+    let delForm = document.getElementById("del-form");
+    delForm.submit();
+  })
+</script>
+
+{% endblock script %}

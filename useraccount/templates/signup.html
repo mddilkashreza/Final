@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <h1>Register</h1>
+        <form method="post">
+            {% csrf_token %}
+                {% for field in form %}
+
+                <div class="from-group">
+                    {% for error in field.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                    <span> {{ field.help_text }}</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <input type="submit" value="submit" class="btn btn-primary">
+        </form> 
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+
+{% endblock content %}
