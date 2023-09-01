@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from useraccount.forms import CustomLoginForm,SignUpForm
+from useraccount.forms import CustomLoginForm,SignUpForm, ProfileUpdateForm
 from useraccount.models import User
 
 
@@ -44,5 +44,12 @@ def user_logout(request):
 
 
 
-
+def Profile_update(request):
+    form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        messages.add_message(request, messages.INFO, "Profile Update successfully.")
+        return HttpResponseRedirect(reverse("useraccount:profile_update"))
+    context = {"form": form}
+    return render(request, "profile_update.html", context)
 
