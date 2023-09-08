@@ -34,7 +34,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('api/',include('blog.api.urls', namespace="blog")),
-     path('auth/',include('useraccount.urls', namespace="useraccount")),
+     path('api/',include('blog.api.urls')),
+     path('auth/',include('useraccount.api.urls')),
      path("apidocs/", schema_view.with_ui("swagger", cache_timeout=0), name="apidocs")
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
