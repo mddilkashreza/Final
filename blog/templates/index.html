@@ -16,10 +16,13 @@
                   <p class="card-text">{{ post.content }}</p>
                 
                 </div>
+                {% if request.user == post.user %}
                 <div class="card-footer">
                   <a href="{% url 'blog:edit_post' post.id %}" class="btn btn-primary">Edit</a>
                   <a data-postid="{{ post.id }}" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#" class="btn btn-danger">Delete</a>
                 </div>
+                  {% endif %}
+
               </div>
               {% endfor %}
         </div>

@@ -7,7 +7,7 @@ from django.contrib import messages
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-id")
     context = {"posts": posts}
     return render(request, 'index.html', context)
 
