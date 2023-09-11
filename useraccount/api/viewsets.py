@@ -1,4 +1,4 @@
-# app_name/views.py
+
 
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -8,8 +8,9 @@ from django.contrib.auth import login, authenticate, logout
 from useraccount.api.serialzers import UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    
     serializer_class = UserSerializer
+    queryset = User.objects.all()
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
