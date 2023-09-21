@@ -5,10 +5,11 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from useraccount.forms import CustomLoginForm,SignUpForm, ProfileUpdateForm
 from useraccount.models import User
+from rest_framework.decorators import api_view
 
 
 
-
+# @api_view
 def user_login(request):
     form = CustomLoginForm(request.POST or None)
     if request.method == "POST":
@@ -26,7 +27,7 @@ def user_login(request):
     return render(request, 'login.html', context)
 
 
-
+# @api_view
 def user_signup(request):
     form = SignUpForm(request.POST or None)
     if form.is_valid():
@@ -37,13 +38,13 @@ def user_signup(request):
     return render(request, "signup.html", context)
 
 
-
+# @api_view
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("useraccount:user_login"))
 
 
-
+# @api_view
 def Profile_update(request):
     form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=request.user)
     if form.is_valid():

@@ -3,9 +3,11 @@
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate, logout
 from useraccount.api.serialzers import UserSerializer
+
+User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     

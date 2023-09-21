@@ -4,6 +4,9 @@ from blog.api.viewsets import PostViewSet
 
 
 
+app_name = "blog"
+
+
 router = routers.DefaultRouter()
 
 
